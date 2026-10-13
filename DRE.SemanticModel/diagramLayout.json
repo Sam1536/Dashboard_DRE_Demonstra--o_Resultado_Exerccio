@@ -1,0 +1,100 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 44
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 153.36163941535983,
+            "y": 0
+          },
+          "nodeIndex": "dFormatoDRE",
+          "nodeLineageTag": "91a48642-87c6-4242-9dbd-ab41333347f5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 549.18475118062975,
+            "y": 24
+          },
+          "nodeIndex": "dPlanoContas",
+          "nodeLineageTag": "98221140-10a3-4382-a4af-a22865b90e21",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 864.36163941535983,
+            "y": 333
+          },
+          "nodeIndex": "fOrcado",
+          "nodeLineageTag": "ea14ba6c-c97d-4290-99e9-7098d1a8a56b",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 208,
+            "y": 319
+          },
+          "nodeIndex": "fRealizado",
+          "nodeLineageTag": "253bfb31-9f02-4565-8e00-3169aca4acd7",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 525.82311176526991,
+            "y": 601
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "59386dd4-0329-4b19-bdc2-8b172bf8af76",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 912.46147234991008,
+            "y": 44
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "0cedb639-1c20-408c-a196-240cd1eb4441",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

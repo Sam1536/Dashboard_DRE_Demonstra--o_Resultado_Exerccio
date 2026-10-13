@@ -1,0 +1,25 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["dFormatoDRE","dPlanoContas","fOrcado","fRealizado","_Medidas"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dFormatoDRE
+ref table dPlanoContas
+ref table fOrcado
+ref table DateTableTemplate_c2cee6f5-4641-4c97-922c-3b079a2028ac
+ref table fRealizado
+ref table Calendario
+ref table LocalDateTable_5c266baa-ba29-4a1f-bbad-77f3426bc6d6
+ref table _Medidas
+
+ref cultureInfo pt-BR
+

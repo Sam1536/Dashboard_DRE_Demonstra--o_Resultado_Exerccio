@@ -1,0 +1,109 @@
+table _Medidas
+	lineageTag: 0cedb639-1c20-408c-a196-240cd1eb4441
+
+	measure 'Total Orçado' = SUM(fOrcado[Valor Orçado])
+		formatString: "R$"\ #,0.0;-"R$"\ #,0.0;"R$"\ #,0.0
+		lineageTag: 75fad9a6-1930-48a6-bcd8-aadc0aeced17
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Total Realizado' = SUM(fRealizado[Valor Realizado])
+		formatString: "R$"\ #,0.0;-"R$"\ #,0.0;"R$"\ #,0.0
+		lineageTag: e4ccd058-eeaf-4182-9794-d9e144466e9f
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Desvio Orçado X Realizado' = ```
+			[Realizado Final] - [Orçado Final]  
+			```
+		formatString: "R$"\ #,0.0;-"R$"\ #,0.0;"R$"\ #,0.0
+		lineageTag: 7bd8cda0-0337-4c45-8dba-2d7cd73cbcdf
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '% Desvio' =
+			
+			DIVIDE([Desvio Orçado X Realizado], ABS([Orçado Final]))
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: eb47ff63-6927-402e-bab8-82651678f7c2
+
+	measure 'Realizado SubTotal' =
+			
+			CALCULATE(
+			    [Total Realizado],
+			    FILTER(
+			        ALL(dFormatoDRE),
+			        dFormatoDRE[Ordem] <= MAX(dFormatoDRE[Ordem])
+			    )
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 22666c40-cbf0-4428-917e-ecc4824c3f56
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Realizado Final' =
+			
+			var vSub_Total = SELECTEDVALUE(dFormatoDRE[Subtotal?])
+			RETURN
+			IF(
+			    vSub_Total = 0, [Total Realizado],
+			    IF(
+			        vSub_Total = 1 && NOT(ISINSCOPE(dPlanoContas[Nível 2])),
+			        [Realizado SubTotal]
+			        )
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: dbf53f52-1741-4229-b92b-f17895bee090
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Subtotal Selecionado' = SELECTEDVALUE(dFormatoDRE[Subtotal?])
+		formatString: 0
+		lineageTag: 0d54f9f5-363c-45cf-8553-eb64ec9ad645
+
+	measure 'Esta no Nivel 2?' = ISINSCOPE(dPlanoContas[Nível 2])
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8eac4729-1ba5-42bf-a87b-61ba2cc951a6
+
+	measure 'Orçado SubTotal' =
+			
+			CALCULATE(
+			    [Total Orçado],
+			    FILTER(
+			        ALL(dFormatoDRE),
+			        dFormatoDRE[Ordem] <= MAX(dFormatoDRE[Ordem])
+			    )
+			)
+		formatString: 0
+		lineageTag: 12f1dd86-55b4-4e2d-a26a-ff2ba6d3e51a
+
+	measure 'Orçado Final' =
+			
+			var vSub_Total = SELECTEDVALUE(dFormatoDRE[Subtotal?])
+			RETURN
+			IF(
+			    vSub_Total = 0, [Total Orçado],
+			    IF(
+			        vSub_Total = 1 && NOT(ISINSCOPE(dPlanoContas[Nível 2])),
+			        [Orçado SubTotal]
+			        )
+			)
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: aa5c9348-eb51-4d62-bd0b-c4942db191b3
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	partition _Medidas = m
+		mode: import
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Coluna 1", type text}}),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Tipo Alterado",{"Coluna 1"})
+				in
+				    #"Colunas Removidas"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

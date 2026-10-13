@@ -1,0 +1,48 @@
+table dPlanoContas
+	lineageTag: 98221140-10a3-4382-a4af-a22865b90e21
+
+	column Conta
+		dataType: int64
+		formatString: 0
+		lineageTag: 91a26db5-0490-448d-ab21-267be4c89068
+		summarizeBy: none
+		sourceColumn: Conta
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Descrição da Conta'
+		dataType: string
+		lineageTag: b275da72-9d7f-45e2-9aeb-541c9dad0b4d
+		summarizeBy: none
+		sourceColumn: Descrição da Conta
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nível 1'
+		dataType: string
+		lineageTag: 58e70cdf-2f7c-4cd6-a880-c7b082fc09ae
+		summarizeBy: none
+		sourceColumn: Nível 1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nível 2'
+		dataType: string
+		lineageTag: 575ae3d3-3271-4632-a38e-f14f8e6b9f33
+		summarizeBy: none
+		sourceColumn: Nível 2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dPlanoContas = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\a-agn\Documents\PoweBi Exercícios e Outros\PowerBI_Impressionador_Hashtag_2023 Materia\Importação e Tratamento de BD-Power Query\Biblioteca Relatórios\DRE\Bases\DRE 2019.xlsx"), null, true),
+				    dPlanoContas_Table = Fonte{[Item="dPlanoContas",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(dPlanoContas_Table,{{"Conta", Int64.Type}, {"Descrição da Conta", type text}, {"Nível 1", type text}, {"Nível 2", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

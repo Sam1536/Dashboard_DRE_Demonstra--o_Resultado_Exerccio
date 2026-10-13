@@ -1,0 +1,25 @@
+relationship AutoDetected_f018b862-c978-4b9e-8990-dded08b864f5
+	fromColumn: fOrcado.Conta
+	toColumn: dPlanoContas.Conta
+
+relationship AutoDetected_e2282c2f-1f41-4880-99ea-a74b0c767f20
+	fromColumn: fRealizado.Conta
+	toColumn: dPlanoContas.Conta
+
+relationship 1b7e07ca-e899-18d2-46ab-a8773cb964e9
+	fromColumn: dPlanoContas.'Nível 1'
+	toColumn: dFormatoDRE.Grupo
+
+relationship fbd150f3-36ed-4c81-b953-b685d7c04df8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendario.Data
+	toColumn: LocalDateTable_5c266baa-ba29-4a1f-bbad-77f3426bc6d6.Date
+
+relationship cd9175c2-acac-6202-d3eb-fe079ee007cb
+	fromColumn: fOrcado.Mês/Ano
+	toColumn: Calendario.Data
+
+relationship 42f47c70-33b4-46bd-7f63-4f9a133d08ca
+	fromColumn: fRealizado.Mês/Ano
+	toColumn: Calendario.Data
+

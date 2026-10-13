@@ -1,0 +1,44 @@
+table dFormatoDRE
+	lineageTag: 91a48642-87c6-4242-9dbd-ab41333347f5
+
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 2fedb3f2-2b21-4509-b82e-a10860495410
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grupo
+		dataType: string
+		lineageTag: e57ae9cc-d464-49a4-8e68-41f865e1df80
+		summarizeBy: none
+		sourceColumn: Grupo
+		sortByColumn: Ordem
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subtotal?
+		dataType: int64
+		formatString: 0
+		lineageTag: c852cbbc-5e0c-4c6f-a98f-bfab631a0fa6
+		summarizeBy: none
+		sourceColumn: Subtotal?
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dFormatoDRE = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\a-agn\Documents\PoweBi Exercícios e Outros\PowerBI_Impressionador_Hashtag_2023 Materia\Importação e Tratamento de BD-Power Query\Biblioteca Relatórios\DRE\Bases\DRE 2019.xlsx"), null, true),
+				    dFormatoDRE_Table = Fonte{[Item="dFormatoDRE",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(dFormatoDRE_Table,{{"Ordem", Int64.Type}, {"Grupo", type text}, {"Subtotal?", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,44 @@
+table fOrcado
+	lineageTag: ea14ba6c-c97d-4290-99e9-7098d1a8a56b
+
+	column Mês/Ano
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: af9ba5e6-8e40-4852-bccf-e1777d545ccc
+		summarizeBy: none
+		sourceColumn: Mês/Ano
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Conta
+		dataType: int64
+		formatString: 0
+		lineageTag: 7081e2c0-9ff4-474f-9cdf-336b1ba7eee2
+		summarizeBy: none
+		sourceColumn: Conta
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Orçado'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a97e707-c01d-4da1-8dab-ee8e08fa0649
+		summarizeBy: sum
+		sourceColumn: Valor Orçado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fOrcado = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\a-agn\Documents\PoweBi Exercícios e Outros\PowerBI_Impressionador_Hashtag_2023 Materia\Importação e Tratamento de BD-Power Query\Biblioteca Relatórios\DRE\Bases\DRE 2019.xlsx"), null, true),
+				    fOrcado_Table = Fonte{[Item="fOrcado",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(fOrcado_Table,{{"Mês/Ano", type date}, {"Conta", Int64.Type}, {"Valor Orçado", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+

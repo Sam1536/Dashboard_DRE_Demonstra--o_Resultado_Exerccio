@@ -1,0 +1,44 @@
+table fRealizado
+	lineageTag: 253bfb31-9f02-4565-8e00-3169aca4acd7
+
+	column Mês/Ano
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b8030ef6-2bb2-4ed6-b428-78be0e2164af
+		summarizeBy: none
+		sourceColumn: Mês/Ano
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Conta
+		dataType: int64
+		formatString: 0
+		lineageTag: ff8c6573-38ba-48fa-bc23-60b983f8fe53
+		summarizeBy: none
+		sourceColumn: Conta
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Realizado'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ea43dd1-4ea5-4dfa-a535-18e03abcfd72
+		summarizeBy: sum
+		sourceColumn: Valor Realizado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fRealizado = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(File.Contents("C:\Users\a-agn\Documents\PoweBi Exercícios e Outros\PowerBI_Impressionador_Hashtag_2023 Materia\Importação e Tratamento de BD-Power Query\Biblioteca Relatórios\DRE\Bases\DRE 2019.xlsx"), null, true),
+				    fRealizado_Table = Fonte{[Item="fRealizado",Kind="Table"]}[Data],
+				    #"Tipo Alterado" = Table.TransformColumnTypes(fRealizado_Table,{{"Mês/Ano", type date}, {"Conta", Int64.Type}, {"Valor Realizado", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
