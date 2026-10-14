@@ -1,4 +1,3 @@
-# Dashboard DRE
 
 # 💰 Dashboard de DRE | Power BI
 
